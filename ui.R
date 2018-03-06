@@ -44,7 +44,8 @@ ui <- fluidPage(
                         tags$li("MinSeok Choi")
                       )
                       ),
-             tabPanel("Violent Crime Trend", "bb"),
+             tabPanel("Violent Crime Trend", "bb",
+                      dataTableOutput("yearly.trend")),
              tabPanel("Safest Cities", "cc"),
              tabPanel("Population Effect on Crimes", "dd"),
              tabPanel("Most Common Crimes", "dd")
