@@ -1,4 +1,5 @@
 library("shiny")
+
 ui <- fluidPage(
   navbarPage("Violent Crime Analyzation",
              tabPanel("Overview", 
@@ -47,7 +48,16 @@ ui <- fluidPage(
              tabPanel("Violent Crime Trend", "bb"),
              tabPanel("Safest Cities", "cc"),
              tabPanel("Population Effect on Crimes", "dd"),
-             tabPanel("Most Common Crimes", "dd")
+             tabPanel("Most Common Crimes", 
+                      h2("Crime rates over the years and which crimes occur most often"),
+                      sidebarPanel(  
+                        p("Choose year to View Data for"), 
+                        selectInput("yearChoice", "Choose a year:", choices = years)
+        
+                      ),
+                      mainPanel(
+                        
+                      )
   ), 
   tags$head(tags$style("p, ul, ol{
                        font-size: 16px;
@@ -59,3 +69,4 @@ ui <- fluidPage(
                       )
             )
   )
+)
