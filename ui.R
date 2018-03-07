@@ -1,5 +1,6 @@
 library("shiny")
-
+library("dplyr")
+library("ggplot2")
 ui <- fluidPage(
   navbarPage("Violent Crime Analyzation",
              tabPanel("Overview", 
@@ -49,21 +50,23 @@ ui <- fluidPage(
              tabPanel("Safest Cities", "cc"),
              tabPanel("Population Effect on Crimes", "dd"),
              tabPanel("Most Common Crimes", 
-                      h2("Crime rates over the years and which crimes occur most often"),
+                      h2("Crime rates over the years (All Data is Per Capita)"),
                       sidebarPanel(  
-                        p("Choose year to View Data for"), 
-                        selectInput("yearChoice", "Choose a year:", choices = years)
-        
+                        selectizeInput("yearChoice", "Choose a year:", choices = years),
+                        selectizeInput("cityChoice", "Choose a City:", choices = city),
+                        plotlyOutput("plot2")
                       ),
                       mainPanel(
-                        
-                      )
+                        plotlyOutput("plot"),
+                        verbatimTextOutput("extraInfo")         
+                        )
+                      
   ), 
   tags$head(tags$style("p, ul, ol{
                        font-size: 16px;
                        }
                        body {
-                        background-color: #3685B5;
+                        background-color: #933A16;
                         color: black;
                        }"
                       )
