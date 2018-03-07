@@ -1,4 +1,5 @@
 library("shiny")
+library(leaflet)
 ui <- fluidPage(
   navbarPage("Violent Crime Analyzation",
              tabPanel("Overview", 
@@ -22,8 +23,6 @@ ui <- fluidPage(
                       tags$ol(
                         tags$li("Does the stereotypical view that due to our current level of media consumption violence has risen within the population hold 
                            true when compared to this national database?"),
-                        tags$li("For families looking into large cities, what would be the safest option given current rates of crimes and trends of crime in 
-                           the past few years."),
                         tags$li("Do larger cities have a higher per capita crime rate than smaller cities? "),
                         tags$li("What type of crime is most common, and does that change over the years or from city to city? If the answer does change, 
                            why is that and does population affect those changes?")
@@ -45,7 +44,19 @@ ui <- fluidPage(
                       )
                       ),
              tabPanel("Violent Crime Trend", "bb"),
-             tabPanel("Safest Cities", "cc"),
+             tabPanel("Map Analyzation", 
+                      sidebarLayout(
+                        sidebarPanel(
+                          sliderInput("year",
+                                      "Year Selection",
+                                      value = 1975,
+                                      min = 1975,
+                                      max = 2015)
+                          ),
+                      mainPanel(
+                        plotOutput('Map')
+                        )
+                      )),
              tabPanel("Population Effect on Crimes", "dd"),
              tabPanel("Most Common Crimes", "dd")
   ), 
