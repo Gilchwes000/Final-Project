@@ -1,4 +1,7 @@
 library("shiny")
+library(plotly)
+crime.data <- read.csv("data/report.csv",  fileEncoding="UTF-8-BOM")
+cities <- unique(crime.data$agency_jurisdiction)
 ui <- fluidPage(
   navbarPage("Violent Crime Analyzation",
              tabPanel("Overview", 
@@ -44,8 +47,14 @@ ui <- fluidPage(
                         tags$li("MinSeok Choi")
                       )
                       ),
-             tabPanel("Violent Crime Trend", "bb",
-                      dataTableOutput("yearly.trend")),
+             tabPanel("Violent Crime Trend", 
+                      sidebarPanel(
+                        selectizeInput("city-select", "City", choices=cities, selected = cities[1])
+                      ),
+                      mainPanel(
+                        plotlyOutput("yearly.trend")
+                      )
+             ),
              tabPanel("Safest Cities", "cc"),
              tabPanel("Population Effect on Crimes", "dd"),
              tabPanel("Most Common Crimes", "dd")

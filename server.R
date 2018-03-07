@@ -1,13 +1,18 @@
 library("dplyr")
+library(plotly)
+
+crime.data <- read.csv("data/report.csv",  fileEncoding="UTF-8-BOM")
+cities <- unique(crime.data$agency_jurisdiction)
+
 server <- function(input, output){
-  crime.data <- reactive({
-    return(read.csv("data/report.csv",  fileEncoding="UTF-8-BOM"))
-  })
   
-  output$yearly.trend <- renderDataTable({
-    group_by(crime.data(), agency_code) %>%
-      summarise(location = agency_jurisdiction[1], mean_number_violent_crimes = mean(violent_crimes), 
-                years_listed = n()) %>%
-      return()
+  output$yearly.trend <- renderPlotly({
+    selected.data <- filter(crime.data, agency_jurisdiction == input$city-select)
+    plot <- plot_ly(
+      x = selected.data$report_year,
+      y = selected.data$violent_crimes,
+      type = "histogram"
+    )
+    return(plot)
   })
 }
