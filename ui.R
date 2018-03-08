@@ -69,10 +69,13 @@ ui <- fluidPage(
   ), 
   tags$head(tags$style("p, ul, ol{
                        font-size: 16px;
-                       }
+                      }
+                      label {
+                        color:black;
+                      }
                        body {
-                        background-color: #933A16;
-                        color: black;
+                        background-color: black;
+                        color: white;
                        }"
                       )
             )
