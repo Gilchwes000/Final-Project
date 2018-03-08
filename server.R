@@ -85,7 +85,7 @@ shinyServer(function(input, output){
         ))
   })
     
-  # Section 3: comparing robberies and homicides, but also with total crimes
+  # Section 4: comparing robberies and homicides, but also with total crimes
   c <- reactive({
   compare.data <- crime.data %>%
     filter(report_year == input$year10)
