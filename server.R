@@ -151,19 +151,15 @@ shinyServer(function(input, output){
   
   # draw country map of crime data based on user input year and crime. 
   output$Map <- renderPlot({
-    year.map <- state.map %>% select(state.name, t(), report_year, lat.x, long.x, lat.y, long.y, group)
-    year.specific <- year.map %>% filter(report_year == input$year)
+    year.map <- state.map %>% select(state.name, t(), report_year, "Latitude" = lat.x, "Longitude" = long.x, lat.y, long.y, group)
+    year.specific <- year.map %>% filter(report_year == input$year) %>% na.omit()
     NumberOfCrimes <- year.specific[[t()]]
     ggplot(data = year.specific) +
-      geom_polygon(mapping = aes(x = long.x, y = lat.x, group = group), fill = "snow3") + 
+      geom_polygon(mapping = aes(x = Longitude, y = Latitude, group = group), fill = "snow3") + 
       geom_point(aes(x = long.y, y = lat.y, size = NumberOfCrimes), color = "red") +
       coord_quickmap() + 
       borders("state") +
-      theme_bw() + 
-      theme(panel.border = element_blank(), panel.grid.major = element_blank(),
-            panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"), 
-            line = element_blank(),
-            title = element_blank())
+      labs(title = "wtf")
   })
 })
     

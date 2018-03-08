@@ -185,7 +185,7 @@ ui <- fluidPage(
                         ),
                         mainPanel(
                           h2("USA Map of Crime Rates"),
-                          p("This map visualization contains different types of crimes depending on user's preferred year in each cities. The size 
+                          h3("This map visualization contains different types of crimes depending on user's preferred year in each cities. The size 
                             of the dot indicates the count of that specific crime.  As the dot representing each city gets bigger, the crime rate
                             for the city in that year has increased.")
                           
@@ -193,7 +193,7 @@ ui <- fluidPage(
                         ),
                       plotOutput('Map'),
                       br(),
-                      p("In the map, there is a trend overtime that cities by the coast have highest crime rate in United States. There really is no clear
+                      h3("In the map, there is a trend overtime that cities by the coast have highest crime rate in United States. There really is no clear
                         indication that bigger cities have higher crime rates, or vice versa.  Since there are different types of crimes, the data various 
                         among the cities depending on the crimes.  But also noteworthy is that while a recent increase in crime can be observed, 
                         crime rates have actually decreased overall since the 70's.")
