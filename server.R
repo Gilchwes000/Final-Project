@@ -6,6 +6,7 @@ library("plotly")
 #library(leaflet)
 library("stringr")
 library("openintro")
+library("maps")
 
 # set up and structure data
 crime.data <- read.csv("data/report.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8-BOM")
@@ -109,6 +110,18 @@ shinyServer(function(input, output){
     year.map <- state.map %>% select(state.name, t(), report_year, lat.x, long.x, lat.y, long.y, group)
     year.specific <- year.map %>% filter(report_year == input$mapyear)
     NumberOfCrimes <- year.specific[[t()]]
+    
+    # # plot map
+    # ggplot(data = world.new, aes(x = long, y = lat)) +
+    #   geom_polygon(aes(group = group, fill = KT),
+    #                color = "black", size = 0.25) +
+    #   labs(title = paste("Below is a choropleth map of CO2 emissions above",
+    #                      input$kt, "for the year", input$year, "."),
+    #        x = "Longitude",
+    #        y = "Latitude") + 
+    #   scale_fill_distiller(name="Emission(in kt)", palette = "RdPu") 
+    # 
+    
     
     ggplot(data = year.specific) +
       geom_polygon(mapping = aes(x = long.x, y = lat.x, group = group), fill = "snow2") + 

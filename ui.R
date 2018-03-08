@@ -1,8 +1,8 @@
 # load necessary libraries
 library("shiny")
-#library("plotly")
+library("plotly")
 library("shinythemes")
-#library("ggplot2")
+library("ggplot2")
 library("leaflet")
 #library("shinycssloaders)
 
