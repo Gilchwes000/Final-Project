@@ -2,6 +2,7 @@ library("shiny")
 library(plotly)
 crime.data <- read.csv("data/report.csv",  fileEncoding="UTF-8-BOM")
 cities <- unique(crime.data$agency_jurisdiction)
+
 ui <- fluidPage(
   navbarPage("Violent Crime Analyzation",
              tabPanel("Overview", 

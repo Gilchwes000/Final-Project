@@ -4,7 +4,6 @@ library(plotly)
 crime.data <- read.csv("data/report.csv",  fileEncoding="UTF-8-BOM")
 locations <- unique(crime.data$agency_jurisdiction)
 cities <- locations[locations != "United States"]
-selected.data <- filter(crime.data, agency_jurisdiction == "United States")
 
 server <- function(input, output){
   
