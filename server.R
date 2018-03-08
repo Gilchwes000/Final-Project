@@ -29,7 +29,4 @@ shinyServer(function(input, output){
       labs(x = "City Size",y = "Number of Crimes") +
       facet_wrap(~crime)
   })
-  
-  
-  
 })

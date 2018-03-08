@@ -63,7 +63,9 @@ ui <- fluidPage(
                         )
                       ),
                       mainPanel(
-                        plotOutput("citymap"))),
+                        plotOutput("citymap")),
+                      h3("There seems to be a clear positive trend 
+                         between the city size and counts of robberies and assaults, but for rapes and homicides, there is no clear trend.")),
              tabPanel("Population Effect on Crimes", "dd"),
              tabPanel("Most Common Crimes", "dd")
   ), 
