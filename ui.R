@@ -1,6 +1,11 @@
 library("shiny")
 library("dplyr")
 library("ggplot2")
+data <- read.csv("data/report.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8-BOM")
+years <- unique(data$report_year)
+city <- data$agency_jurisdiction[1:69]
+crimeTypes <- c("Total Crimes", "Homicides", "rapes", "assaults", "robberies")
+
 ui <- fluidPage(
   navbarPage("Violent Crime Analyzation",
              tabPanel("Overview", 

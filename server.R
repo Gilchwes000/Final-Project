@@ -2,13 +2,14 @@ library("rlang")
 library("ggplot2")
 library("plotly")
 library("shiny")
-source("calculations.R")
 
+
+data <- read.csv("data/report.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8-BOM")
+years <- unique(data$report_year)
+city <- data$agency_jurisdiction[1:69]
+crimeTypes <- c("Total Crimes", "Homicides", "rapes", "assaults", "robberies")
 server <- function(input, output){
-  dataInput <- reactive({
-   data <- read.csv("data/report.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8-BOM")
-   return(data)
-  })
+  
  
    YearReact <- reactive({
     return(input$yearChoice)
