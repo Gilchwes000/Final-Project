@@ -136,9 +136,9 @@ ui <- fluidPage(
                       )
              ),
              
-             # Section 3: Comparing Robberies and Homicides
+             # Section 4: Comparing Robberies and Homicides
              tabPanel("Comparing Crimes: Robbery and Homicide", 
-                      h2("How are Robberies and Homicides Related Across America"),
+                      h2("How Robberies and Homicides Relate Across America"),
                       sidebarLayout(
                         # display user input option
                         sidebarPanel(
