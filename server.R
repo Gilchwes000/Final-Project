@@ -16,6 +16,7 @@ cities <- us.cities
 crime.data$agency_jurisdiction <- gsub(",","",crime.data$agency_jurisdiction)
 cities.crime <- left_join(cities, crime.data, by = c("name" = "agency_jurisdiction"))
 state.map <- left_join(state.map, cities.crime, by = c("state.name" = "country.etc", "state.name" = "country.etc"))
+View(state.map)
 server <- function(input, output){
    t <- reactive({
     type <- switch(input$type, 
@@ -32,16 +33,15 @@ server <- function(input, output){
     year.specific <- year.map %>% filter(report_year == input$year)
     NumberOfCrimes <- year.specific[[t()]]
     ggplot(data = year.specific) +
-      geom_polygon(mapping = aes(x = long.x, y = lat.x, group = group), fill = "white") + 
+      geom_polygon(mapping = aes(x = long.x, y = lat.x, group = group), fill = "snow2") + 
       geom_point(aes(x = long.y, y = lat.y, size = NumberOfCrimes), alpha = .5) +
       scale_fill_brewer(palette = 14) +
       coord_quickmap() + 
       borders("state", xlim = c(-130, -60), ylim = c(20, 50)) +
       theme_bw() + 
       theme(panel.border = element_blank(), panel.grid.major = element_blank(),
-                         panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),
+                         panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"), 
             line = element_blank(),
-            text = element_blank(),
             title = element_blank())
   })
 }

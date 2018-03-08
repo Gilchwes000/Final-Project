@@ -63,7 +63,8 @@ ui <- fluidPage(
                       mainPanel(
                         h2("Map Analyzation based on Violent Crime"),
                         p("This map visualization contains different types of crimes depedning on user's preferred year in each cities. 
-                           As the dot of city gets bigger, that means the number of crimes gets higher.")
+                           As the dot of city gets bigger, that means the number of crimes gets higher. Dots represents the number of type 
+                           of crimes.")
                         
                         ) 
                       ),
