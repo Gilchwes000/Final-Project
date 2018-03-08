@@ -6,7 +6,6 @@ library("shiny")
 library("plotly")
 library("shinythemes")
 library("ggplot2")
-#library("shinycssloaders)
 
 # set up and structure data
 crime.data <- read.csv("data/report.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8-BOM")
@@ -15,9 +14,10 @@ years <- unique(crime.data$report_year)
 crimeTypes <- c("Total Crimes", "Homicides", "rapes", "assaults", "robberies")
 
 ui <- fluidPage(
-  theme = shinytheme('cyborg'),
+  theme = shinytheme('flatly'),
   navbarPage(title = HTML("<em>Violent Crimes in American Cities</em>"),
              
+             # Section 1: Summary Page
              tabPanel("Home",
                       fluidRow(
                          column(width = 12, img(src="pic.png", style = "display: block; margin-left: auto; margin-right: auto; width: 100%;"))
@@ -52,7 +52,7 @@ ui <- fluidPage(
                                 tags$li("How do the four defined violent crimes relate to each other? If a city has a high rate of one, can we assume
                                 a high rate for another as well?"),
                                 tags$li("Where would be the safest places to move given current rates of crimes and trends of crime in the past few
-                                years.  Do larger cities generally have a higher per capita crime rate than smaller cities?")
+                                years?  Do larger cities generally have a higher per capita crime rate than smaller cities?")
                                ),
                                br(),
                                h2(HTML("<strong>Significance</strong>")),
