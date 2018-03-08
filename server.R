@@ -1,5 +1,5 @@
 #Group AB5
-#info201 Final Project
+#info201 2018 Final Project
 
 # load necessary libraries
 library("shiny")
