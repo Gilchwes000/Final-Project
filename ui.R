@@ -164,6 +164,28 @@ ui <- fluidPage(
                         )  
                       )
               ),
+             
+             # Section 5: Safest Cities Overall
+             tabPanel("Safest Cities Overall", 
+                      h2("Population Effect on City Crime Rates"),
+                      br(),
+                      sidebarPanel(
+                        sliderInput("year3", h3("Select Year:"),
+                                    min = 1975,
+                                    max = 2014,
+                                    step = 1,
+                                    value = 2014,
+                                    sep = "",
+                                    animate = TRUE
+                        )
+                      ),
+                      mainPanel(
+                        plotOutput("citymap")),
+                      h3("As the split graphs above show, the count of rapes and homicides commited stays constant across the varying populations
+                         of the cities.  Assaults and Robberies, however, fluctuate quite frequently across the years, varying from both positive and
+                         negative trends. Because assaults and robberies are the most frequent crimes in almost every city across the US, this fluctuation
+                         is expected.  However, for a majority of the years, the trend leans positive.  Thus, from this FBI collected data, there is no
+                         clear set pattern between populations and the various crime rates")),
              br(),
              hr(),
              p("INFO 201 | WINTER 2017 | Diana Dominic, Wesley Gilchrist, Matthew Vogt, MinSeok Choi", align = "center"),
