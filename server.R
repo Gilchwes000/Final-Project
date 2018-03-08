@@ -4,9 +4,9 @@ library("plotly")
 library("shiny")
 
 ##Data for future use, and loading in CSV file
-data <- read.csv("data/report.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8-BOM")
-years <- unique(data$report_year)
-city <- data$agency_jurisdiction[1:69]
+crime.data <- read.csv("data/report.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8-BOM")
+years <- unique(crime.data$report_year)
+city <- crime.data$agency_jurisdiction[1:69]
 crimeTypes <- c("Total Crimes", "Homicides", "rapes", "assaults", "robberies")
 server <- function(input, output){
   
@@ -21,7 +21,7 @@ server <- function(input, output){
    
    ##Renders bar graph of violence types and values for given year and city
   output$plot <- renderPlotly({
-    cityData <- data[grep(CityReact(), data$agency_jurisdiction),] 
+    cityData <- crime.data[grep(CityReact(), crime.data$agency_jurisdiction),] 
     yearData <- filter(cityData, report_year == YearReact())
     specificInfo <- (select(yearData, crimes_percapita:robberies_percapita))
     finalInfo <- as.numeric(as.vector(specificInfo[1,]))
@@ -52,7 +52,7 @@ the rates of crime have gone down since the 80's and 90's.")
      
   ##renders line graph for all years for given city
   output$plot2 <- renderPlotly({
-    cityData <- data[grep(CityReact(), data$agency_jurisdiction),] 
+    cityData <- crime.data[grep(CityReact(), crime.data$agency_jurisdiction),] 
     specificInfo <- (select(cityData, crimes_percapita))
     overall <- specificInfo$crimes_percapita[1:41]
     plots <- plot_ly(

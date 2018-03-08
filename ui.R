@@ -1,9 +1,9 @@
 library("shiny")
 library("dplyr")
 library("ggplot2")
-data <- read.csv("data/report.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8-BOM")
-years <- unique(data$report_year)
-city <- data$agency_jurisdiction[1:69]
+crime.data <- read.csv("data/report.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8-BOM")
+years <- unique(crime.data$report_year)
+city <- crime.data$agency_jurisdiction[1:69]
 crimeTypes <- c("Total Crimes", "Homicides", "rapes", "assaults", "robberies")
 
 ui <- fluidPage(
@@ -76,7 +76,7 @@ ui <- fluidPage(
                         color:black;
                       }
                        body {
-                        background-color: black;
+                        background-color: #47494d;
                         color: white;
                        }"
                       )
