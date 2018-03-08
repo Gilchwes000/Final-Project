@@ -54,6 +54,10 @@ ui <- fluidPage(
                                       max = 2015)
                           ),
                       mainPanel(
+                        h2("Map Analyzation based on Violent Crime"),
+                        p("This map visualization conveys information about number of violent crimes in each region. 
+                           As the color of region gets darker, that means the number of crimes gets higher. Since the dataset
+                           doesn't have crime data in some region, there will be region where written as NA."),
                         plotOutput('Map')
                         )
                       )),
