@@ -96,7 +96,7 @@ ui <- fluidPage(
                       }
                       
                        body, .well {
-                        background-color: black;
+                        background-color: #47494d;
                         color: white;
                        }"
                       )
