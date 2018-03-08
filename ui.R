@@ -48,23 +48,56 @@ ui <- fluidPage(
                       )
                       ),
              tabPanel("Violent Crime Trend", 
+                      h2("Is violent crime in the US really on the rise?"),
+                      br(),
+                      sidebarLayout(
+                        sidebarPanel(
+                          p("A recent spike in the number of violent crimes along
+                            with greater new coverage of such crimes has led to a majority of Americans believing
+                            that crime is on the rise. This although is not a completely unusual trend, over the past 20 years
+                            or so Americans have thought this, with the exception a time period between 1999 and 2001 (Gallup). 
+                            ")
+                          ),
+                        mainPanel(
+                          tags$img(src="http://content.gallup.com/origin/gallupinc/GallupSpaces/Production/Cms/POLL/wzvtbhtlxkgekbwdjg_fww.png",
+                                   alt="US crime perception"),
+                          p(tags$a(href="http://content.gallup.com/origin/gallupinc/GallupSpaces/Production/Cms/POLL/wzvtbhtlxkgekbwdjg_fww.png",
+                                   "Graph"), "taken from Gallup.com")
+                        )
+                      ),
+                      br(),
+                      plotlyOutput("yearly.trend"),
+                      br(),
+                      p("Looking at the past 40 years worth of data on violent crimes, we can see that despite the very recent
+                        increase, as a whole crime in America has decreased. This contrasts the misconception that crime is 
+                        on the rise and we live in a more dangerous country than it was previously. Compared to the late 1980's
+                        and early 1990's the amount of violent crime is drastically smaller. The small rise we have seen recently
+                        pales in comparison to the rise in violent crime from 1985 to 1991. If you hover over the graph
+                        it lists the year and that years per capita crime rate in the United States."),
+                      br(),
                       sidebarPanel(
                         selectizeInput("city-select", "City", choices=cities, selected = cities[1])
                       ),
                       mainPanel(
-                        plotlyOutput("yearly.trend")
-                      )
+                        plotlyOutput("yearly.trend.per.city")
+                      ),
+                      p("This graph shows the yearly per capita crime rate for a specific city. The selection box is searchable
+                        and the graph has the same hover functionality as the prevoius graph.")
              ),
              tabPanel("Safest Cities", "cc"),
              tabPanel("Population Effect on Crimes", "dd"),
              tabPanel("Most Common Crimes", "dd")
   ), 
   tags$head(tags$style("p, ul, ol{
-                       font-size: 16px;
-                       }
-                       body {
-                        background-color: #3685B5;
+                       font-size: 18px;
+                      }
+                      label {
                         color: black;
+                      }
+                      
+                       body, .well {
+                        background-color: black;
+                        color: white;
                        }"
                       )
             )
