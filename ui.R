@@ -68,7 +68,10 @@ ui <- fluidPage(
                         
                         ) 
                       ),
-                      plotOutput('Map')),
+                      plotOutput('Map'),
+                      br(),
+                      p("In the map, there is a trend overtime that cities by the coast have highest crime rate in United States. 
+                        ")),
              tabPanel("Population Effect on Crimes", "dd"),
              tabPanel("Most Common Crimes", "dd")
   ), 

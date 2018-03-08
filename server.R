@@ -16,7 +16,6 @@ cities <- us.cities
 crime.data$agency_jurisdiction <- gsub(",","",crime.data$agency_jurisdiction)
 cities.crime <- left_join(cities, crime.data, by = c("name" = "agency_jurisdiction"))
 state.map <- left_join(state.map, cities.crime, by = c("state.name" = "country.etc", "state.name" = "country.etc"))
-View(state.map)
 server <- function(input, output){
    t <- reactive({
     type <- switch(input$type, 
