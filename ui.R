@@ -51,16 +51,23 @@ ui <- fluidPage(
                                       "Year Selection",
                                       value = 1975,
                                       min = 1975,
-                                      max = 2015)
+                                      max = 2014),
+                          radioButtons("type", "Type of Crime:",
+                                       c("Homicides" = "homicides",
+                                         "Rapes" = "rapes",
+                                         "Assaults" = "assaults",
+                                         "Robberies" = "robberies",
+                                         "ViolentCrimes" = "ViolentCrimes"
+                                       ))
                           ),
                       mainPanel(
                         h2("Map Analyzation based on Violent Crime"),
-                        p("This map visualization conveys information about number of violent crimes in each region. 
-                           As the color of region gets darker, that means the number of crimes gets higher. Since the dataset
-                           doesn't have crime data in some region, there will be region where written as NA."),
-                        plotOutput('Map')
-                        )
-                      )),
+                        p("This map visualization contains different types of crimes depedning on user's preferred year in each cities. 
+                           As the dot of city gets bigger, that means the number of crimes gets higher.")
+                        
+                        ) 
+                      ),
+                      plotOutput('Map')),
              tabPanel("Population Effect on Crimes", "dd"),
              tabPanel("Most Common Crimes", "dd")
   ), 
