@@ -6,7 +6,6 @@ library("shiny")
 library("dplyr")
 library("ggplot2")
 library("plotly")
-library("leaflet")
 library("stringr")
 library("openintro")
 library("maps")
@@ -22,7 +21,7 @@ state.map <- state.map %>% mutate(state.name)
 
 # set up server
 shinyServer(function(input, output){
-  # section 1: overall violent crime patterns
+  # section 2: overall violent crime patterns
   output$yearly.trend.per.city <- renderPlotly({
     selected.data <- filter(crime.data, agency_jurisdiction == input$'city-select')
     p <- plot_ly(selected.data, x = ~report_year, y = ~crimes_percapita, name = input$'city-select', type = 'scatter', mode = 'lines',
@@ -38,7 +37,7 @@ shinyServer(function(input, output){
   })
   
   
-  # Section 2: most common crimes committed
+  # Section 3: most common crimes committed
   # reactive variables for input year and city
   YearReact <- reactive({
     return(input$yearChoice)
@@ -85,7 +84,7 @@ shinyServer(function(input, output){
         ))
   })
     
-  # Section 3: comparing robberies and homicides, but also with total crimes
+  # Section 4: comparing robberies and homicides, but also with total crimes
   c <- reactive({
   compare.data <- crime.data %>%
     filter(report_year == input$year10)
@@ -128,43 +127,6 @@ shinyServer(function(input, output){
                         size = 12)
       )
     })
-  
-
-  # Section 4: Map Visual
-  # fix syntax of city name
-  cities <- us.cities %>%
-    mutate("agency_jurisdiction" = gsub(" ",", ", cities$name)) 
-  
-  # merge crime data with city map locations
-  new.world <- crime.data %>%
-    left_join(cities, by="agency_jurisdiction")
-  colnames(new.world)[17] <- "state.name"
-  state.map <- left_join(state.map, new.world, by = "state.name")
-  t <- reactive({
-    type <- switch(input$type, 
-                   homicides = "homicides",
-                   rapes = "rapes",
-                   assaults = "assaults",
-                   robberies = "robberies",
-                   ViolentCrimes = "violent_crimes")
-  })
-  
-  # draw country map of crime data based on user input year and crime. 
-  output$Map <- renderPlot({
-    year.map <- state.map %>% select(state.name, t(), report_year, lat.x, long.x, lat.y, long.y, group)
-    year.specific <- year.map %>% filter(report_year == input$year)
-    NumberOfCrimes <- year.specific[[t()]]
-    ggplot(data = year.specific) +
-      geom_polygon(mapping = aes(x = long.x, y = lat.x, group = group), fill = "snow3") + 
-      geom_point(aes(x = long.y, y = lat.y, size = NumberOfCrimes), color = "red") +
-      coord_quickmap() + 
-      borders("state") +
-      theme_bw() + 
-      theme(panel.border = element_blank(), panel.grid.major = element_blank(),
-            panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"), 
-            line = element_blank(),
-            title = element_blank())
-  })
 })
     
   
