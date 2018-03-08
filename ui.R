@@ -45,7 +45,25 @@ ui <- fluidPage(
                       )
                       ),
              tabPanel("Violent Crime Trend", "bb"),
-             tabPanel("Safest Cities", "cc"),
+             tabPanel("Safest Cities", 
+                      h2("Are smaller cities safer than larger ones?"),
+                      br(),
+                      sidebarPanel(
+                        # selectInput("year3", h3("Select Year:"),
+                        #             c("1975", "1999", "2000", "2002", "2003", "2004", "2005", "2006", "2007", "2008", 
+                        #               "2009", "2010", "2011", "2012", "2013", "2014", "Most Recent" = "Most_Recent"),
+                        #             selected = "Most_Recent"
+                        # )
+                        
+                        sliderInput("year3", h3("Select Year:"),
+                                    min = 1975,
+                                    max = 2014,
+                                    step = 1,
+                                    value = 2014
+                        )
+                      ),
+                      mainPanel(
+                        plotOutput("citymap"))),
              tabPanel("Population Effect on Crimes", "dd"),
              tabPanel("Most Common Crimes", "dd")
   ), 
