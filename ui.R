@@ -1,8 +1,31 @@
+# load necessary libraries
 library("shiny")
+#library("plotly")
+library("shinythemes")
+#library("ggplot2")
+library("leaflet")
+#library("shinycssloaders)
+
+#home  LEAFLETMAP    wes    mat    him   scatterspecific  
+
+# set up and structure data
+crime.data <- read.csv("data/report.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8-BOM")
+cities <- unique(crime.data$agency_jurisdiction)
+years <- unique(crime.data$report_year)
+crimeTypes <- c("Total Crimes", "Homicides", "rapes", "assaults", "robberies")
+
+
+
 ui <- fluidPage(
-  navbarPage("Violent Crime Analyzation",
-             tabPanel("Overview", 
-                      h2("Project Summary"), 
+  theme = shinytheme('flatly'),
+  navbarPage(title = HTML("<em>Violent Crimes Across America</em>"),
+             
+             tabPanel("Home",
+                      #BANNER!!!!!!!! :)
+                      # fluidRow(
+                      #   column(width = 12, img(src="banner.png", style = "display: block; margin-left: auto; margin-right: auto; width: 100%;"))
+                      # ),
+                      h2("Project Overview"), 
                       p("The data presented and analysed here goes over the violent crimes from the last 40 years. The data can be manipulated by year 
                       and city to view changes in crime rates, safest locations and other valuable data and trends based upon the FBI’s data. This information is publically 
                       available but is near impossible to analyse without use of computers and visual aids (which we have provided), because of the sheer amount of data. The 
@@ -29,7 +52,7 @@ ui <- fluidPage(
                            why is that and does population affect those changes?")
                       ),
                       br(),
-                      h2("Why important"),
+                      h2("Significance"),
                       p("The importance of everyone's safety cannot be overstated and is a basic right of everyone, with the large amount of crimes and 
                         shootings being reported nationwide people are feeling less safe, the goal of this analysis is to show people where the majority 
                         of crimes are taking place, as well as trends for crime rates in large cities. The type of violent crimes being committed are also 
@@ -44,38 +67,145 @@ ui <- fluidPage(
                         tags$li("MinSeok Choi")
                       )
                       ),
-             tabPanel("Violent Crime Trend", "bb"),
-             tabPanel("Safest Cities", 
-                      h2("Are smaller cities safer than larger ones?"),
+             
+             # Section 1: Leaflet Interactive Map
+             
+             
+             # Section 2: Overall Crime Trends
+             tabPanel("Overall Crime Trends", 
+                      h2("Violent Crime on the Rise?"),
                       br(),
-                      sidebarPanel(
-                        # selectInput("year3", h3("Select Year:"),
-                        #             c("1975", "1999", "2000", "2002", "2003", "2004", "2005", "2006", "2007", "2008", 
-                        #               "2009", "2010", "2011", "2012", "2013", "2014", "Most Recent" = "Most_Recent"),
-                        #             selected = "Most_Recent"
-                        # )
+                      sidebarLayout(
+                        sidebarPanel(
+                          h4("Increased media coverage of violent crimes today has led a majority of Americans to believe 
+                            that overall crime is on the rise.  This recent understanding, however, is not so recent, as Americans 
+                            have expresesed the same beliefs for almost the past twenty years, with the exception of the years from
+                            1999 to 2001 (Gallup).")
+                          ),
                         
-                        sliderInput("year3", h3("Select Year:"),
-                                    min = 1975,
-                                    max = 2014,
-                                    step = 1,
-                                    value = 2014
+                        # crime perception patterns
+                        mainPanel(
+                          tags$img(src="http://content.gallup.com/origin/gallupinc/GallupSpaces/Production/Cms/POLL/wzvtbhtlxkgekbwdjg_fww.png",
+                                   alt="US crime perception"),
+                          p(tags$a(href="http://content.gallup.com/origin/gallupinc/GallupSpaces/Production/Cms/POLL/wzvtbhtlxkgekbwdjg_fww.png",
+                                   "Graph"), "taken from Gallup.com")
                         )
+                          ),
+                      br(),
+                      
+                      # yearly trends for overall USA data
+                      plotlyOutput("yearly.trend"),
+                      br(),
+                      h3("Looking at the past 40 years worth of data on violent crimes, we can see that despite the very recent
+                        increase, crime in America has decreased as a whole. This disproves the misconception that crime is 
+                        on the rise and we live in an increasingly dangerous country. Compared to the late 1980's
+                        and the early 1990's, the number of violent crimes committed is drastically smaller. The small rise we have
+                        seen recently pales in comparison to the rise in violent crime from 1985 to 1991. Hover over the graph
+                        to view a list of the year and the corresponding per capita crime rate for the US."),
+                      br(),
+                      
+                      # display input city choices
+                      sidebarPanel(
+                        selectizeInput("city-select", "City", choices=cities, selected = cities[1])
                       ),
+                      
+                      # yearly trends by city
                       mainPanel(
-                        plotOutput("citymap")),
-                      h3("There seems to be a clear positive trend 
-                         between the city size and counts of robberies and assaults, but for rapes and homicides, there is no clear trend.")),
-             tabPanel("Population Effect on Crimes", "dd"),
-             tabPanel("Most Common Crimes", "dd")
-  ), 
-  tags$head(tags$style("p, ul, ol{
-                       font-size: 16px;
-                       }
-                       body {
-                        background-color: #3685B5;
-                        color: black;
-                       }"
+                        plotlyOutput("yearly.trend.per.city")
+                      ),
+                      h3("This graph shows the yearly per capita crime rate for a specific city. The selection box is searchable
+                        and the graph has the same hover functionality as the prevoius graph.")
+                      ),
+             
+            
+             # Section 3: Most Common Crimes
+             tabPanel("Most Common Crimes", 
+                      h2("Per Capita Crime Rates Across the Years"),
+                      
+                      # display input choices of year and city and produce plot
+                      sidebarPanel(  
+                        selectizeInput("yearChoice", "Choose a year:", choices = years),
+                        selectizeInput("cityChoice", "Choose a City:", choices = cities),
+                        plotlyOutput("lineplot")
+                      ),
+                      
+                      # main panel with bar graph output and concluding text
+                      mainPanel(
+                        plotlyOutput("barplot"),
+                        h3("The graph above shows the occurence levels of crimes in the selected city and year, easily displaying the most common crimes
+                            for the selected inputs. As you scroll through the years and cities, the counts of the different types of crimes do not change
+                            drastically, although some cities have drastic changes in levels of crime (see graph to the left). Assaults and roberies remain 
+                            the two most common type of violent crime in america, where rape and homicide remain at a much lower rate. The majority of 
+                            observed cities, as well as in the US overall, the rates of crime have gone down since the 80's and 90's.")
                       )
-            )
+             ),
+             
+             # Section 4: Basic Map 
+             tabPanel("US Map of Crime Data", 
+                      sidebarLayout(
+                        sidebarPanel(
+                          sliderInput("mapyear",
+                                      "Year Selection",
+                                      value = 1975,
+                                      min = 1975,
+                                      max = 2014,
+                                      sep = ""),
+                          radioButtons("maptype", "Type of Crime:",
+                                       c("Homicides" = "homicides",
+                                         "Rapes" = "rapes",
+                                         "Assaults" = "assaults",
+                                         "Robberies" = "robberies",
+                                         "ViolentCrimes" = "ViolentCrimes"
+                                       ))
+                        ),
+                        mainPanel(
+                          h2("Map Analyzation based on Violent Crime"),
+                          p("This map visualization contains different types of crimes depedning on user's preferred year in each cities. 
+                            As the dot of city gets bigger, that means the number of crimes gets higher. Dots represents the number of type 
+                            of crimes.")
+                          
+                          ) 
+                        ),
+                      plotOutput("mapb"),
+                      br(),
+                      p("In the map, there is a trend overtime that cities by the coast have highest crime rate in United States. 
+                        ")),
+             
+             
+             
+             
+             
+             # section 5: comparing robberies and rapes, but also with total crimes
+             tabPanel("Comparing Crimes: Robberies and Rapes Across America", 
+                      sidebarLayout(
+                        
+                        # display user input option
+                        sidebarPanel(
+                          sliderInput("year10", h3("Select Year:"),
+                                  min = 1975,
+                                  max = 2014,
+                                  step = 1,
+                                  value = 2014,
+                                  sep = "",
+                                  animate = TRUE
+                          )
+                        ),
+                        
+                        # display scatter plot
+                        mainPanel(
+                          plotlyOutput("robrap"))
+                      ))
+  )
+  
+  
+  
+  # tags$head(tags$style("p, ul, ol{
+  #                      font-size: 16px;
+  #                      }
+  #                      body {
+  #                       background-color: #3685B5;
+  #                       color: black;
+  #                      }"
+  #                     )
+  #           )
   )
