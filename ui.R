@@ -164,40 +164,6 @@ ui <- fluidPage(
                         )  
                       )
               ),
-             
-             
-             # Section 5: Basic Map 
-             tabPanel("Mapping Violent Crime", 
-                      sidebarLayout(
-                        sidebarPanel(
-                          sliderInput("year",
-                                      "Year Selection",
-                                      value = 1975,
-                                      min = 1975,
-                                      max = 2014),
-                          radioButtons("type", "Type of Crime:",
-                                       c("Homicides" = "homicides",
-                                         "Rapes" = "rapes",
-                                         "Assaults" = "assaults",
-                                         "Robberies" = "robberies",
-                                         "ViolentCrimes" = "ViolentCrimes"
-                                       ))
-                        ),
-                        mainPanel(
-                          h2("USA Map of Crime Rates"),
-                          h3("This map visualization contains different types of crimes depending on user's preferred year in each cities. The size 
-                            of the dot indicates the count of that specific crime.  As the dot representing each city gets bigger, the crime rate
-                            for the city in that year has increased.")
-                          
-                          ) 
-                        ),
-                      plotOutput('Map'),
-                      br(),
-                      h3("In the map, there is a trend overtime that cities by the coast have highest crime rate in United States. There really is no clear
-                        indication that bigger cities have higher crime rates, or vice versa.  Since there are different types of crimes, the data various 
-                        among the cities depending on the crimes.  But also noteworthy is that while a recent increase in crime can be observed, 
-                        crime rates have actually decreased overall since the 70's.")
-             ),
              br(),
              hr(),
              p("INFO 201 | WINTER 2017 | Diana Dominic, Wesley Gilchrist, Matthew Vogt, MinSeok Choi", align = "center"),
