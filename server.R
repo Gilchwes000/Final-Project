@@ -3,14 +3,14 @@ library("ggplot2")
 library("plotly")
 library("shiny")
 
-
+##Data for future use, and loading in CSV file
 data <- read.csv("data/report.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8-BOM")
 years <- unique(data$report_year)
 city <- data$agency_jurisdiction[1:69]
 crimeTypes <- c("Total Crimes", "Homicides", "rapes", "assaults", "robberies")
 server <- function(input, output){
   
- 
+ ##Reactive variable for year choixe and city choice
    YearReact <- reactive({
     return(input$yearChoice)
   })
@@ -19,7 +19,7 @@ server <- function(input, output){
      return(input$cityChoice)
    })
    
-   
+   ##Renders bar graph of violence types and values for given year and city
   output$plot <- renderPlotly({
     cityData <- data[grep(CityReact(), data$agency_jurisdiction),] 
     yearData <- filter(cityData, report_year == YearReact())
@@ -50,6 +50,7 @@ the rates of crime have gone down since the 80's and 90's.")
     
   })
      
+  ##renders line graph for all years for given city
   output$plot2 <- renderPlotly({
     cityData <- data[grep(CityReact(), data$agency_jurisdiction),] 
     specificInfo <- (select(cityData, crimes_percapita))

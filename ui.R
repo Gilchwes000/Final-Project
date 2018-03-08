@@ -54,6 +54,7 @@ ui <- fluidPage(
              tabPanel("Violent Crime Trend", "bb"),
              tabPanel("Safest Cities", "cc"),
              tabPanel("Population Effect on Crimes", "dd"),
+             ##tab for final question allowing user to choose data
              tabPanel("Most Common Crimes", 
                       h2("Crime rates over the years (All Data is Per Capita)"),
                       sidebarPanel(  
@@ -61,6 +62,7 @@ ui <- fluidPage(
                         selectizeInput("cityChoice", "Choose a City:", choices = city),
                         plotlyOutput("plot2")
                       ),
+                      ##main panel, inlcuding bar graph output and text describing it
                       mainPanel(
                         plotlyOutput("plot"),
                         verbatimTextOutput("extraInfo")         
